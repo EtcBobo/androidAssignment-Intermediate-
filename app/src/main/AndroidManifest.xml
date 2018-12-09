@@ -9,7 +9,11 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".MovieRater">
+        <activity
+                android:name=".MovieRater"
+                android:exported="true">
+        </activity>
+        <activity android:name=".LandingPage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -20,9 +24,14 @@
                 android:name=".MovieDetail"
                 android:exported="true">
         </activity>
+
         <activity
                 android:exported="true"
                 android:name=".MovieRating">
+        </activity>
+        <activity
+                android:exported="true"
+                android:name=".MovieEdit">
         </activity>
     </application>
 

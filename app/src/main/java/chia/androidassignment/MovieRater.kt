@@ -1,10 +1,12 @@
 package chia.androidassignment
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
+import android.view.*
 import android.widget.*
 import kotlinx.android.synthetic.main.activity_movie_rater.*
+
 
 
 class MovieRater : AppCompatActivity() {
@@ -12,11 +14,57 @@ class MovieRater : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_rater)
-
-
-
+        val actionBar = supportActionBar
+        actionBar?.setDisplayHomeAsUpEnabled(true)
 
     }
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.add,menu)
+
+        return super.onCreateOptionsMenu(menu)
+    }
+
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if(item?.itemId == R.id.clear){
+            movTitle?.setText("")
+            movDesc?.setText("")
+            date?.setText("")
+            val radio: RadioButton = findViewById(R.id.English)
+            radio.isChecked = true
+
+            notSuit.isChecked = false
+            viol.isChecked = false
+            langc.isChecked = false
+            var theSuit = findViewById<LinearLayout>(R.id.suit)
+            theSuit.setVisibility(View.INVISIBLE)
+        }
+        if(item?.itemId == R.id.addMovie){
+
+            var title = movTitle.text.toString()
+            var desc = movDesc.text.toString()
+            var id: Int = radioGroup.checkedRadioButtonId
+            val radio: RadioButton = findViewById(id)
+            var lang = radio.text.toString()
+            var date = date.text.toString()
+            var suit = notSuit.isChecked
+            var viol = viol.isChecked
+            var langU = langc.isChecked
+
+            val newMovie = Movie(title,desc,lang,date,suit,viol,langU)
+            val intent = Intent(this, MovieDetail::class.java)
+            intent.putExtra("newMovie", newMovie)
+            startActivity(intent)
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+
     fun onCheckboxClicked(view: View) {
         if (view is CheckBox) {
             val checked: Boolean = view.isChecked
@@ -36,57 +84,6 @@ class MovieRater : AppCompatActivity() {
 
 
 
-
-    fun btnClick(v: View) {
-        //        ar editTextNumber: Int= etNumBiggerThan25.text.toString()
-        //        if(editTextNumber<=25){
-        //            etNumBiggerThan25.setError("Number is lesser or equal 25")
-        //        }
-        val movti: String = movTitle.text.toString()
-        val movd: String = movDesc.text.toString()
-        val datee: String = date.text.toString()
-        //check if the EditText have values or not
-        if(movti.isEmpty() || movd.isEmpty() || datee.isEmpty()){
-            if(movti.isEmpty()){
-                movTitle.setError("Field empty")
-            }
-            if(movd.isEmpty()){
-                movDesc.setError("Field empty")
-            }
-            if(datee.isEmpty()){
-                date.setError("Field empty")
-            }
-
-        } else {
-            var movTitle = movTitle.text
-            var movDesc = movDesc.text
-            var id: Int = radioGroup.checkedRadioButtonId
-            val radio: RadioButton = findViewById(id)
-            var lang = radio.text
-            var date = date.text
-            val checked: Boolean = notSuit.isChecked
-            val checkedV: Boolean = viol.isChecked
-            val checkedL: Boolean = langc.isChecked
-            var newChecked = checked.toString()
-            var reason: String = ""
-            if (checked) {
-                if (checkedV && checkedL) {
-                    reason = "\nReasons:\nLanguage\nViolence"
-                } else if (checkedV) {
-                    reason = "\nReasons:\nViolence"
-                } else if (checkedL) {
-                    reason = "\nReasons:\nLanguage"
-                }
-
-            }
-            var theText =
-                "Title = " + movTitle + "\nOverview = " + movDesc + "\nReleased date = " + date + "\nLanguage = " + lang + "\nNot Suitable for all ages = " + newChecked + reason
-
-            val duration = Toast.LENGTH_LONG
-            val toast = Toast.makeText(applicationContext, theText, duration)
-            toast.show()
-        }
-    }
 
 
 }

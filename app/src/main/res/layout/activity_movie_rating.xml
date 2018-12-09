@@ -10,8 +10,9 @@
 
 >
 
+
     <TextView
-            android:text="Enter your review for the movie : Venom"
+            android:text="Enter your review for the movie :"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:id="@+id/textView4"/>
     <RatingBar
@@ -31,6 +32,6 @@
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
-            android:id="@+id/editText"/>
+            android:id="@+id/ratingText"/>
 
 </LinearLayout>
